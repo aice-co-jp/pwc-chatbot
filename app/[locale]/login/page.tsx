@@ -119,6 +119,13 @@ export default async function Login({
       }
     }
 
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]).*$/
+    if (!passwordRegex.test(password) || password.length < 8) {
+      return redirect(
+        '/login?message=Password must include uppercase, lowercase, numbers and symbols, and must be longer than 8 characters.'
+      )
+    }
+
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
