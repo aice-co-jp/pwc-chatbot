@@ -21,6 +21,6 @@ const MIXTRAL_8X7B: LLM = {
 }
 
 export const GROQ_LLM_LIST: LLM[] = [
-//LLaMA2_70B,
-//MIXTRAL_8X7B
+  //LLaMA2_70B,
+  //MIXTRAL_8X7B
 ]

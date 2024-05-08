@@ -25,6 +25,6 @@ const GEMINI_PRO_VISION: LLM = {
 }
 
 export const GOOGLE_LLM_LIST: LLM[] = [
-//GEMINI_PRO,
-//GEMINI_PRO_VISION
+  //GEMINI_PRO,
+  //GEMINI_PRO_VISION
 ]
