@@ -1,14 +1,14 @@
-import { Brand } from "@/components/ui/brand"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { SubmitButton } from "@/components/ui/submit-button"
-import { createClient } from "@/lib/supabase/server"
-import { Database } from "@/supabase/types"
-import { createServerClient } from "@supabase/ssr"
-import { get } from "@vercel/edge-config"
-import { Metadata } from "next"
-import { cookies, headers } from "next/headers"
-import { redirect } from "next/navigation"
+import {Brand} from "@/components/ui/brand"
+import {Input} from "@/components/ui/input"
+import {Label} from "@/components/ui/label"
+import {SubmitButton} from "@/components/ui/submit-button"
+import {createClient} from "@/lib/supabase/server"
+import {Database} from "@/supabase/types"
+import {createServerClient} from "@supabase/ssr"
+import {get} from "@vercel/edge-config"
+import {Metadata} from "next"
+import {cookies, headers} from "next/headers"
+import {redirect} from "next/navigation"
 
 export const metadata: Metadata = {
   title: "Login"
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default async function Login({
   searchParams
 }: {
-  searchParams: { message: string }
+  searchParams: {message: string}
 }) {
   const cookieStore = cookies()
   const supabase = createServerClient<Database>(
@@ -34,7 +34,7 @@ export default async function Login({
   const session = (await supabase.auth.getSession()).data.session
 
   if (session) {
-    const { data: homeWorkspace, error } = await supabase
+    const {data: homeWorkspace, error} = await supabase
       .from("workspaces")
       .select("*")
       .eq("user_id", session.user.id)
@@ -56,7 +56,7 @@ export default async function Login({
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const {data, error} = await supabase.auth.signInWithPassword({
       email,
       password
     })
@@ -65,7 +65,7 @@ export default async function Login({
       return redirect(`/login?message=${error.message}`)
     }
 
-    const { data: homeWorkspace, error: homeWorkspaceError } = await supabase
+    const {data: homeWorkspace, error: homeWorkspaceError} = await supabase
       .from("workspaces")
       .select("*")
       .eq("user_id", data.user.id)
@@ -129,12 +129,12 @@ export default async function Login({
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { error } = await supabase.auth.signUp({
+    const {error} = await supabase.auth.signUp({
       email,
       password,
       options: {
         // USE IF YOU WANT TO SEND EMAIL VERIFICATION, ALSO CHANGE TOML FILE
-        emailRedirectTo: `${origin}/auth/callback`
+        // emailRedirectTo: `${origin}/auth/callback`
       }
     })
 
@@ -157,7 +157,7 @@ export default async function Login({
     const cookieStore = cookies()
     const supabase = createClient(cookieStore)
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    const {error} = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${origin}/auth/callback?next=/login/password`
     })
 
