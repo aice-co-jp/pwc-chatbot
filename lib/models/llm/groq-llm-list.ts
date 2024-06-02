@@ -1,4 +1,4 @@
-import {LLM} from "@/types"
+import { LLM } from "@/types"
 
 const GROQ_PLATORM_LINK = "https://groq.com/"
 
