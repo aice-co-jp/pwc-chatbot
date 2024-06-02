@@ -2,6 +2,9 @@
   "name": "chatbot-ui",
   "version": "2.0.0",
   "private": true,
+  "engines": {
+    "node": "18.17.1"
+  },
   "scripts": {
     "chat": "supabase start && npm run db-types && npm run dev",
     "restart": "supabase stop && npm run chat",
@@ -9,7 +12,7 @@
     "prepare": "husky install",
     "clean": "npm run lint:fix && npm run format:write",
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
