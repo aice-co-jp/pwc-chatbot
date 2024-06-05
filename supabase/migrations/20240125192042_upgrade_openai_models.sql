@@ -95,7 +95,7 @@ BEGIN
         4096,
         'gpt-4o', -- Updated default model
         'You are a friendly, helpful AI assistant.',
-        0.8,
+        1.28,
         'My home workspace.',
         'openai',
         TRUE,
