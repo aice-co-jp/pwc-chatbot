@@ -1,5 +1,6 @@
 "use client"
 
+// from のモジュールから importの要素を利用できるようにする
 import { Dashboard } from "@/components/ui/dashboard"
 import { ChatbotUIContext } from "@/context/context"
 import { getAssistantWorkspacesByWorkspaceId } from "@/db/assistants"
@@ -20,10 +21,15 @@ import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { ReactNode, useContext, useEffect, useState } from "react"
 import Loading from "../loading"
 
+
+// interfaceは型定義。childrenはReactNode型のみを受け入れる
+// ReactNodeはほぼすべてを受け入れる相当柔軟な型定義
 interface WorkspaceLayoutProps {
   children: ReactNode
 }
-
+// exportは外部利用できるよ
+// defaultは初期設定
+//引数childrenで、WorkspaceLayoutProps型
 export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const router = useRouter()
 
