@@ -1,4 +1,4 @@
-// 全てクライアント側で動かす
+// 全てクライアント側で動かす(all動的?)
 "use client"
 
 // from のモジュールから importの要素を利用できるようにする
@@ -84,7 +84,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     })()
   }, [])
 
-  //レンダリング後に実行される 
+  //レンダリング後にworkspaceIdに変更があれば実行される 初期化 
   useEffect(() => {
     ;(async () => await fetchWorkspaceData(workspaceId))()
 
@@ -104,25 +104,26 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
   const fetchWorkspaceData = async (workspaceId: string) => {
     setLoading(true)
-
+    // workspaceidと同じidのワークスペースを取り出しselectedWorkspaceにセット
     const workspace = await getWorkspaceById(workspaceId)
     setSelectedWorkspace(workspace)
-
+    //workspaceidと同じidのワークスペースのid,name,assistantを取得しアシスタントをセット
     const assistantData = await getAssistantWorkspacesByWorkspaceId(workspaceId)
     setAssistants(assistantData.assistants)
-
+    // assistantが複数あるのか？データ構造があんまりわかってない
     for (const assistant of assistantData.assistants) {
       let url = ""
-
+      // アシスタントにimage_pathがあるなら24時間有効なURLを変数に入れる
       if (assistant.image_path) {
         url = (await getAssistantImageFromStorage(assistant.image_path)) || ""
       }
-
+      
       if (url) {
+        // urlからデータを取得して(?)、Base64に変換 blobは読み取り専用データ base64はデータを文字列にする際に使う規格
         const response = await fetch(url)
         const blob = await response.blob()
         const base64 = await convertBlobToBase64(blob)
-
+        // AssistantImagesにassistantId path base64 urlを足してセット
         setAssistantImages(prev => [
           ...prev,
           {
@@ -144,6 +145,8 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
         ])
       }
     }
+
+    // 新しくなったworkspaceIdでセットし直し
 
     const chats = await getChatsByWorkspaceId(workspaceId)
     setChats(chats)
@@ -192,6 +195,6 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   if (loading) {
     return <Loading />
   }
-
+  // Dashboardにchildrenを渡して出力
   return <Dashboard>{children}</Dashboard>
 }
