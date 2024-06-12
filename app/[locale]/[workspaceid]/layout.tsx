@@ -191,7 +191,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
     setLoading(false)
   }
-
+  //fetchWorkspaceDataが処理し終わるまでLoadingの画面を出力
   if (loading) {
     return <Loading />
   }
