@@ -1,3 +1,4 @@
+// 全てクライアント側で動かす
 "use client"
 
 // from のモジュールから importの要素を利用できるようにする
@@ -31,12 +32,15 @@ interface WorkspaceLayoutProps {
 // defaultは初期設定
 //引数childrenで、WorkspaceLayoutProps型
 export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
+  //ルーティングを簡単に設定するためのもの
   const router = useRouter()
-
+  // idの取得
   const params = useParams()
+  // パラメータを取得
   const searchParams = useSearchParams()
+  //文字列にして
   const workspaceId = params.workspaceid as string
-
+  // 値を変更できる奴を読み込んでる？
   const {
     setChatSettings,
     setAssistants,
@@ -62,14 +66,17 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setNewMessageImages,
     setShowFilesDisplay
   } = useContext(ChatbotUIContext)
-
+  // 初期値true のusestate
   const [loading, setLoading] = useState(true)
 
+  //レンダリング後に実行される 
   useEffect(() => {
     ;(async () => {
+      //supabaseからセッション情報を取得(非同期)
       const session = (await supabase.auth.getSession()).data.session
-
+      // セッションが存在しないなら
       if (!session) {
+        // loginにナビゲートする
         return router.push("/login")
       } else {
         await fetchWorkspaceData(workspaceId)
@@ -77,6 +84,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     })()
   }, [])
 
+  //レンダリング後に実行される 
   useEffect(() => {
     ;(async () => await fetchWorkspaceData(workspaceId))()
 
