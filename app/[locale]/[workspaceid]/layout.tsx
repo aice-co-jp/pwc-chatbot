@@ -28,7 +28,7 @@ import Loading from "../loading"
 interface WorkspaceLayoutProps {
   children: ReactNode
 }
-// exportは外部利用できるよ
+// exportは外部利用できる
 // defaultは初期設定
 //引数childrenで、WorkspaceLayoutProps型
 export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
@@ -36,7 +36,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const router = useRouter()
   // idの取得
   const params = useParams()
-  // パラメータを取得
+  // urlのパラメータを取得
   const searchParams = useSearchParams()
   //文字列にして
   const workspaceId = params.workspaceid as string
@@ -76,7 +76,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
       const session = (await supabase.auth.getSession()).data.session
       // セッションが存在しないなら
       if (!session) {
-        // loginにナビゲートする
+        // /loginにナビゲートする
         return router.push("/login")
       } else {
         await fetchWorkspaceData(workspaceId)
@@ -133,6 +133,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
             url
           }
         ])
+        // urlが無ければbase64を無しにしてセット
       } else {
         setAssistantImages(prev => [
           ...prev,
@@ -148,35 +149,46 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
 
     // 新しくなったworkspaceIdでセットし直し
 
+    //chatテーブルから古い順に取得したものをset
     const chats = await getChatsByWorkspaceId(workspaceId)
     setChats(chats)
 
+    // workspaceテーブルからid,name,collectionsを取得し、colloctionsをset
     const collectionData =
       await getCollectionWorkspacesByWorkspaceId(workspaceId)
     setCollections(collectionData.collections)
 
+    // folderテーブルから全て取得
     const folders = await getFoldersByWorkspaceId(workspaceId)
     setFolders(folders)
 
+    // workspaceテーブルからid,name,filesを取得し、filesをset
     const fileData = await getFileWorkspacesByWorkspaceId(workspaceId)
     setFiles(fileData.files)
 
+    // workspaceテーブルからid,name,presetsを取得し、presetsをset
     const presetData = await getPresetWorkspacesByWorkspaceId(workspaceId)
     setPresets(presetData.presets)
 
+    // workspaceテーブルからid,name,promptsを取得し、promptsをset
     const promptData = await getPromptWorkspacesByWorkspaceId(workspaceId)
     setPrompts(promptData.prompts)
 
+    // workspaceテーブルから、id,name,toolsを取得し、toolsをset
     const toolData = await getToolWorkspacesByWorkspaceId(workspaceId)
     setTools(toolData.tools)
 
+    // workspaceテーブルから、id,name,modelsを取得し、modelsをset
     const modelData = await getModelWorkspacesByWorkspaceId(workspaceId)
     setModels(modelData.models)
 
+
     setChatSettings({
+      // modelをurlのパラメータ、workspaceがあるならdefaultmodel、なければgpt4に設定(LLMID型)
       model: (searchParams.get("model") ||
         workspace?.default_model ||
         "gpt-4-1106-preview") as LLMID,
+      // workspaceがあるならdefaultprompt、なければ 標準に
       prompt:
         workspace?.default_prompt ||
         "You are a friendly, helpful AI assistant.",
@@ -186,6 +198,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
       includeWorkspaceInstructions:
         workspace?.include_workspace_instructions || true,
       embeddingsProvider:
+      // openai、localのどちらかでないならopenaiにする
         (workspace?.embeddings_provider as "openai" | "local") || "openai"
     })
 
