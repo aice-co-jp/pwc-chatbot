@@ -354,7 +354,7 @@ export const useChatHandler = () => {
         const updatedChat = await updateChat(currentChat.id, {
           updated_at: new Date().toISOString()
         })
-
+        // prevchats を、prevchatidとupadatechatidが同じならupdatedchatに置き換え。違うならprevChatに置き換え。
         setChats(prevChats => {
           const updatedChats = prevChats.map(prevChat =>
             prevChat.id === updatedChat.id ? updatedChat : prevChat

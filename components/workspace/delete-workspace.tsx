@@ -37,7 +37,7 @@ export const DeleteWorkspace: FC<DeleteWorkspaceProps> = ({
 
   const handleDeleteWorkspace = async () => {
     await deleteWorkspace(workspace.id)
-
+    // ボタンが押されたら、現在のworkspace.idを除外して、セット
     setWorkspaces(prevWorkspaces => {
       const filteredWorkspaces = prevWorkspaces.filter(
         w => w.id !== workspace.id

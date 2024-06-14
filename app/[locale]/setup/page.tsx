@@ -150,6 +150,7 @@ export default function SetupPage() {
 
     // There will always be a home workspace
     setSelectedWorkspace(homeWorkspace!)
+    // proceedがあってSETUP_STEP_COUNT(3)と同じなら実行される
     setWorkspaces(workspaces)
 
     return router.push(`/${homeWorkspace?.id}/chat`)

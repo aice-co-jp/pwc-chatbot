@@ -62,7 +62,7 @@ export const WorkspaceSwitcher: FC<WorkspaceSwitcherProps> = ({}) => {
       is_home: false,
       name: "New Workspace"
     })
-
+    // pupovercontentがクリックされたら　workspacesにcreatedworlspaceをくっつける
     setWorkspaces([...workspaces, createdWorkspace])
     setSelectedWorkspace(createdWorkspace)
     setOpen(false)

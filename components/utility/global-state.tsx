@@ -166,6 +166,7 @@ export const GlobalState: FC<GlobalStateProps> = ({ children }) => {
       }
 
       const workspaces = await getWorkspacesByUserId(user.id)
+      // まじでわからん
       setWorkspaces(workspaces)
 
       for (const workspace of workspaces) {

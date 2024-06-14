@@ -143,6 +143,7 @@ export const WorkspaceSettings: FC<WorkspaceSettingsProps> = ({}) => {
 
     setIsOpen(false)
     setSelectedWorkspace(updatedWorkspace)
+    // ボタンが押されたら、workspaceId,path,base64,urlを追加してセット
     setWorkspaces(workspaces => {
       return workspaces.map(workspace => {
         if (workspace.id === selectedWorkspace.id) {
