@@ -72,7 +72,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   //レンダリング後に実行される 
   useEffect(() => {
     ;(async () => {
-      //supabaseからセッション情報を取得(非同期)
+      //supabaseで認証。セッション情報を取得
       const session = (await supabase.auth.getSession()).data.session
       // セッションが存在しないなら
       if (!session) {
