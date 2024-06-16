@@ -1,17 +1,17 @@
-import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
-import { ChatbotUIContext } from "@/context/context"
-import { createFolder } from "@/db/folders"
-import { ContentType } from "@/types"
-import { IconFolderPlus, IconPlus } from "@tabler/icons-react"
-import { FC, useContext, useState } from "react"
-import { Button } from "../ui/button"
-import { CreateAssistant } from "./items/assistants/create-assistant"
-import { CreateCollection } from "./items/collections/create-collection"
-import { CreateFile } from "./items/files/create-file"
-import { CreateModel } from "./items/models/create-model"
-import { CreatePreset } from "./items/presets/create-preset"
-import { CreatePrompt } from "./items/prompts/create-prompt"
-import { CreateTool } from "./items/tools/create-tool"
+import {useChatHandler} from "@/components/chat/chat-hooks/use-chat-handler"
+import {ChatbotUIContext} from "@/context/context"
+import {createFolder} from "@/db/folders"
+import {ContentType} from "@/types"
+import {IconFolderPlus, IconPlus} from "@tabler/icons-react"
+import {FC, useContext, useState} from "react"
+import {Button} from "../ui/button"
+import {CreateAssistant} from "./items/assistants/create-assistant"
+import {CreateCollection} from "./items/collections/create-collection"
+import {CreateFile} from "./items/files/create-file"
+import {CreateModel} from "./items/models/create-model"
+import {CreatePreset} from "./items/presets/create-preset"
+import {CreatePrompt} from "./items/prompts/create-prompt"
+import {CreateTool} from "./items/tools/create-tool"
 
 interface SidebarCreateButtonsProps {
   contentType: ContentType
@@ -22,9 +22,9 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
   contentType,
   hasData
 }) => {
-  const { profile, selectedWorkspace, folders, setFolders } =
+  const {profile, selectedWorkspace, folders, setFolders} =
     useContext(ChatbotUIContext)
-  const { handleNewChat } = useChatHandler()
+  const {handleNewChat} = useChatHandler()
 
   const [isCreatingPrompt, setIsCreatingPrompt] = useState(false)
   const [isCreatingPreset, setIsCreatingPreset] = useState(false)
@@ -104,11 +104,11 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
           contentType.slice(1, contentType.length - 1)}
       </Button>
 
-      {hasData && (
+      {/*hasData && (
         <Button className="size-[36px] p-1" onClick={handleCreateFolder}>
           <IconFolderPlus size={20} />
         </Button>
-      )}
+      )*/}
 
       {isCreatingPrompt && (
         <CreatePrompt

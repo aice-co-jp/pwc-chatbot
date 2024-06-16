@@ -1,26 +1,26 @@
-import { ChatbotUIContext } from "@/context/context"
-import { updateAssistant } from "@/db/assistants"
-import { updateChat } from "@/db/chats"
-import { updateCollection } from "@/db/collections"
-import { updateFile } from "@/db/files"
-import { updateModel } from "@/db/models"
-import { updatePreset } from "@/db/presets"
-import { updatePrompt } from "@/db/prompts"
-import { updateTool } from "@/db/tools"
-import { cn } from "@/lib/utils"
-import { Tables } from "@/supabase/types"
-import { ContentType, DataItemType, DataListType } from "@/types"
-import { FC, useContext, useEffect, useRef, useState } from "react"
-import { Separator } from "../ui/separator"
-import { AssistantItem } from "./items/assistants/assistant-item"
-import { ChatItem } from "./items/chat/chat-item"
-import { CollectionItem } from "./items/collections/collection-item"
-import { FileItem } from "./items/files/file-item"
-import { Folder } from "./items/folders/folder-item"
-import { ModelItem } from "./items/models/model-item"
-import { PresetItem } from "./items/presets/preset-item"
-import { PromptItem } from "./items/prompts/prompt-item"
-import { ToolItem } from "./items/tools/tool-item"
+import {ChatbotUIContext} from "@/context/context"
+import {updateAssistant} from "@/db/assistants"
+import {updateChat} from "@/db/chats"
+import {updateCollection} from "@/db/collections"
+import {updateFile} from "@/db/files"
+import {updateModel} from "@/db/models"
+import {updatePreset} from "@/db/presets"
+import {updatePrompt} from "@/db/prompts"
+import {updateTool} from "@/db/tools"
+import {cn} from "@/lib/utils"
+import {Tables} from "@/supabase/types"
+import {ContentType, DataItemType, DataListType} from "@/types"
+import {FC, useContext, useEffect, useRef, useState} from "react"
+import {Separator} from "../ui/separator"
+import {AssistantItem} from "./items/assistants/assistant-item"
+import {ChatItem} from "./items/chat/chat-item"
+import {CollectionItem} from "./items/collections/collection-item"
+import {FileItem} from "./items/files/file-item"
+import {Folder} from "./items/folders/folder-item"
+import {ModelItem} from "./items/models/model-item"
+import {PresetItem} from "./items/presets/preset-item"
+import {PromptItem} from "./items/prompts/prompt-item"
+import {ToolItem} from "./items/tools/tool-item"
 
 interface SidebarDataListProps {
   contentType: ContentType
@@ -124,8 +124,8 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
       })
       .sort(
         (
-          a: { updated_at: string; created_at: string },
-          b: { updated_at: string; created_at: string }
+          a: {updated_at: string; created_at: string},
+          b: {updated_at: string; created_at: string}
         ) =>
           new Date(b.updated_at || b.created_at).getTime() -
           new Date(a.updated_at || a.created_at).getTime()
@@ -234,9 +234,8 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
 
         {(dataWithFolders.length > 0 || dataWithoutFolders.length > 0) && (
           <div
-            className={`h-full ${
-              isOverflowing ? "w-[calc(100%-8px)]" : "w-full"
-            } space-y-2 pt-2 ${isOverflowing ? "mr-2" : ""}`}
+            className={`h-full ${isOverflowing ? "w-[calc(100%-8px)]" : "w-full"
+              } space-y-2 pt-2 ${isOverflowing ? "mr-2" : ""}`}
           >
             {folders.map(folder => (
               <Folder
@@ -268,19 +267,20 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
                     const sortedData = getSortedData(
                       dataWithoutFolders,
                       dateCategory as
-                        | "Today"
-                        | "Yesterday"
-                        | "Previous Week"
-                        | "Older"
+                      | "Today"
+                      | "Yesterday"
+                      | "Previous Week"
+                      | "Older"
                     )
 
                     return (
                       sortedData.length > 0 && (
                         <div key={dateCategory} className="pb-2">
-                          <div className="text-muted-foreground mb-1 text-sm font-bold">
-                            {dateCategory}
-                          </div>
-
+                          {
+                            // <div className="text-muted-foreground mb-1 text-sm font-bold">
+                            //   {dateCategory}
+                            // </div>
+                          }
                           <div
                             className={cn(
                               "flex grow flex-col",

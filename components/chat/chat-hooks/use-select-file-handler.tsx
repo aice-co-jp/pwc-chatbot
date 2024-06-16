@@ -1,17 +1,17 @@
-import { ChatbotUIContext } from "@/context/context"
-import { createDocXFile, createFile } from "@/db/files"
-import { LLM_LIST } from "@/lib/models/llm/llm-list"
+import {ChatbotUIContext} from "@/context/context"
+import {createDocXFile, createFile} from "@/db/files"
+import {LLM_LIST} from "@/lib/models/llm/llm-list"
 import mammoth from "mammoth"
-import { useContext, useEffect, useState } from "react"
-import { toast } from "sonner"
+import {useContext, useEffect, useState} from "react"
+import {toast} from "sonner"
 
 export const ACCEPTED_FILE_TYPES = [
-  "text/csv",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/json",
-  "text/markdown",
-  "application/pdf",
-  "text/plain"
+  //  "text/csv",
+  //  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  //  "application/json",
+  //  "text/markdown",
+  //  "application/pdf",
+  //  "text/plain"
 ].join(",")
 
 export const useSelectFileHandler = () => {
@@ -64,7 +64,7 @@ export const useSelectFileHandler = () => {
         } else if (
           simplifiedFileType.includes(
             "vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-              "docx"
+            "docx"
           )
         ) {
           simplifiedFileType = "docx"
@@ -84,7 +84,7 @@ export const useSelectFileHandler = () => {
         if (
           file.type.includes(
             "vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-              "docx"
+            "docx"
           )
         ) {
           const arrayBuffer = await file.arrayBuffer()
@@ -114,11 +114,11 @@ export const useSelectFileHandler = () => {
             prev.map(item =>
               item.id === "loading"
                 ? {
-                    id: createdFile.id,
-                    name: createdFile.name,
-                    type: createdFile.type,
-                    file: file
-                  }
+                  id: createdFile.id,
+                  name: createdFile.name,
+                  type: createdFile.type,
+                  file: file
+                }
                 : item
             )
           )
@@ -133,7 +133,7 @@ export const useSelectFileHandler = () => {
             : reader.readAsText(file)
         }
       } else {
-        throw new Error("Unsupported file type")
+        //throw new Error("Unsupported file type")
       }
 
       reader.onloadend = async function () {
@@ -175,11 +175,11 @@ export const useSelectFileHandler = () => {
               prev.map(item =>
                 item.id === "loading"
                   ? {
-                      id: createdFile.id,
-                      name: createdFile.name,
-                      type: createdFile.type,
-                      file: file
-                    }
+                    id: createdFile.id,
+                    name: createdFile.name,
+                    type: createdFile.type,
+                    file: file
+                  }
                   : item
               )
             )

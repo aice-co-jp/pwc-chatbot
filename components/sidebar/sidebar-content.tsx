@@ -1,9 +1,9 @@
-import { Tables } from "@/supabase/types"
-import { ContentType, DataListType } from "@/types"
-import { FC, useState } from "react"
-import { SidebarCreateButtons } from "./sidebar-create-buttons"
-import { SidebarDataList } from "./sidebar-data-list"
-import { SidebarSearch } from "./sidebar-search"
+import {Tables} from "@/supabase/types"
+import {ContentType, DataListType} from "@/types"
+import {FC, useState} from "react"
+import {SidebarCreateButtons} from "./sidebar-create-buttons"
+import {SidebarDataList} from "./sidebar-data-list"
+import {SidebarSearch} from "./sidebar-search"
 
 interface SidebarContentProps {
   contentType: ContentType
@@ -31,14 +31,15 @@ export const SidebarContent: FC<SidebarContentProps> = ({
           hasData={data.length > 0}
         />
       </div>
-
-      <div className="mt-2">
-        <SidebarSearch
-          contentType={contentType}
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-        />
-      </div>
+      {
+        //    <div className="mt-2">
+        //      <SidebarSearch
+        //        contentType={contentType}
+        //        searchTerm={searchTerm}
+        //        setSearchTerm={setSearchTerm}
+        //      />
+        //    </div>
+      }
 
       <SidebarDataList
         contentType={contentType}
