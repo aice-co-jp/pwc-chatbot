@@ -12,12 +12,12 @@ import useHotkey from "@/lib/hooks/use-hotkey"
 import {LLMID, MessageImage} from "@/types"
 import {useParams} from "next/navigation"
 import {FC, useContext, useEffect, useState} from "react"
-import {ChatHelp} from "./chat-help"
+//import {ChatHelp} from "./chat-help"
 import {useScroll} from "./chat-hooks/use-scroll"
 import {ChatInput} from "./chat-input"
 import {ChatMessages} from "./chat-messages"
 import {ChatScrollButtons} from "./chat-scroll-buttons"
-import {ChatSecondaryButtons} from "./chat-secondary-buttons"
+//import {ChatSecondaryButtons} from "./chat-secondary-buttons"
 
 interface ChatUIProps {}
 
