@@ -10,6 +10,7 @@ export const processPdf = async (pdf: Blob): Promise<FileItemChunk[]> => {
   let completeText = docs.map(doc => doc.pageContent).join(" ")
 
   const splitter = new RecursiveCharacterTextSplitter({
+    separators: ["。"],
     chunkSize: CHUNK_SIZE,
     chunkOverlap: CHUNK_OVERLAP
   })
