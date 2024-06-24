@@ -21,9 +21,12 @@ export const processPdf = async (pdf: Blob): Promise<FileItemChunk[]> => {
   for (let i = 0; i < splitDocs.length; i++) {
     const doc = splitDocs[i]
 
+    // 文書の内容の2文字目以降をスライスして使用
+    const contentFromSecondChar = doc.pageContent.slice(1)
+
     chunks.push({
-      content: doc.pageContent,
-      tokens: encode(doc.pageContent).length
+      content: contentFromSecondChar,
+      tokens: encode(contentFromSecondChar).length
     })
   }
 
