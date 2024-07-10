@@ -1,28 +1,31 @@
 import {ChatbotUIContext} from "@/context/context"
 import {createDocXFile, createFile} from "@/db/files"
+import {createChatFile} from "@/db/chat-files"
 import {LLM_LIST} from "@/lib/models/llm/llm-list"
 import mammoth from "mammoth"
 import {useContext, useEffect, useState} from "react"
 import {toast} from "sonner"
 
 export const ACCEPTED_FILE_TYPES = [
-  //  "text/csv",
-  //  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  //  "application/json",
-  //  "text/markdown",
-  //  "application/pdf",
-  //  "text/plain"
+  "text/csv",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/json",
+  "text/markdown",
+  "application/pdf",
+  "text/plain"
 ].join(",")
 
 export const useSelectFileHandler = () => {
   const {
     selectedWorkspace,
     profile,
+    selectedChat,
     chatSettings,
     setNewMessageImages,
     setNewMessageFiles,
     setShowFilesDisplay,
     setFiles,
+    setChatFiles,
     setUseRetrieval
   } = useContext(ChatbotUIContext)
 
@@ -73,7 +76,17 @@ export const useSelectFileHandler = () => {
         setNewMessageFiles(prev => [
           ...prev,
           {
-            id: "loading",
+            id: file.name,
+            name: file.name,
+            type: simplifiedFileType,
+            file: file
+          }
+        ])
+
+        setChatFiles(prev => [
+          ...prev,
+          {
+            id: file.name,
             name: file.name,
             type: simplifiedFileType,
             file: file
@@ -112,7 +125,7 @@ export const useSelectFileHandler = () => {
 
           setNewMessageFiles(prev =>
             prev.map(item =>
-              item.id === "loading"
+              item.id === file.name
                 ? {
                   id: createdFile.id,
                   name: createdFile.name,
@@ -122,6 +135,24 @@ export const useSelectFileHandler = () => {
                 : item
             )
           )
+          setChatFiles(prev =>
+            prev.map(item =>
+              item.id === file.name
+                ? {
+                  id: createdFile.id,
+                  name: createdFile.name,
+                  type: createdFile.type,
+                  file: file
+                }
+                : item
+            )
+          )
+
+          await createChatFile({
+            user_id: profile.user_id,
+            chat_id: selectedChat!.id,
+            file_id: createdFile.id
+          })
 
           reader.onloadend = null
 
@@ -173,7 +204,7 @@ export const useSelectFileHandler = () => {
 
             setNewMessageFiles(prev =>
               prev.map(item =>
-                item.id === "loading"
+                item.id === file.name
                   ? {
                     id: createdFile.id,
                     name: createdFile.name,
@@ -183,6 +214,24 @@ export const useSelectFileHandler = () => {
                   : item
               )
             )
+            setChatFiles(prev =>
+              prev.map(item =>
+                item.id === file.name
+                  ? {
+                    id: createdFile.id,
+                    name: createdFile.name,
+                    type: createdFile.type,
+                    file: file
+                  }
+                  : item
+              )
+            )
+
+            await createChatFile({
+              user_id: profile.user_id,
+              chat_id: selectedChat!.id,
+              file_id: createdFile.id
+            })
           }
         } catch (error: any) {
           toast.error("Failed to upload. " + error?.message, {
@@ -191,7 +240,8 @@ export const useSelectFileHandler = () => {
           setNewMessageImages(prev =>
             prev.filter(img => img.messageId !== "temp")
           )
-          setNewMessageFiles(prev => prev.filter(file => file.id !== "loading"))
+          setNewMessageFiles(prev => prev.filter(file => file.id !== file.name))
+          setChatFiles(prev => prev.filter(file => file.id !== file.name))
         }
       }
     }

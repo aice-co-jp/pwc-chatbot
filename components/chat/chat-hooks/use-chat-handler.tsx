@@ -1,16 +1,16 @@
-import { ChatbotUIContext } from "@/context/context"
-import { getAssistantCollectionsByAssistantId } from "@/db/assistant-collections"
-import { getAssistantFilesByAssistantId } from "@/db/assistant-files"
-import { getAssistantToolsByAssistantId } from "@/db/assistant-tools"
-import { updateChat } from "@/db/chats"
-import { getCollectionFilesByCollectionId } from "@/db/collection-files"
-import { deleteMessagesIncludingAndAfter } from "@/db/messages"
-import { buildFinalMessages } from "@/lib/build-prompt"
-import { Tables } from "@/supabase/types"
-import { ChatMessage, ChatPayload, LLMID, ModelProvider } from "@/types"
-import { useRouter } from "next/navigation"
-import { useContext, useEffect, useRef } from "react"
-import { LLM_LIST } from "../../../lib/models/llm/llm-list"
+import {ChatbotUIContext} from "@/context/context"
+import {getAssistantCollectionsByAssistantId} from "@/db/assistant-collections"
+import {getAssistantFilesByAssistantId} from "@/db/assistant-files"
+import {getAssistantToolsByAssistantId} from "@/db/assistant-tools"
+import {updateChat} from "@/db/chats"
+import {getCollectionFilesByCollectionId} from "@/db/collection-files"
+import {deleteMessagesIncludingAndAfter} from "@/db/messages"
+import {buildFinalMessages} from "@/lib/build-prompt"
+import {Tables} from "@/supabase/types"
+import {ChatMessage, ChatPayload, LLMID, ModelProvider} from "@/types"
+import {useRouter} from "next/navigation"
+import {useContext, useEffect, useRef} from "react"
+import {LLM_LIST} from "../../../lib/models/llm/llm-list"
 import {
   createTempMessages,
   handleCreateChat,
@@ -227,7 +227,17 @@ export const useChatHandler = () => {
         messageContent
       )
 
-      let currentChat = selectedChat ? { ...selectedChat } : null
+      let currentChat = selectedChat ? {...selectedChat} : await handleCreateChat(
+        chatSettings!,
+        profile!,
+        selectedWorkspace!,
+        messageContent,
+        selectedAssistant!,
+        //newMessageFiles,
+        setSelectedChat,
+        setChats,
+        //setChatFiles
+      )
 
       const b64Images = newMessageImages.map(image => image.base64)
 
@@ -248,7 +258,7 @@ export const useChatHandler = () => {
         )
       }
 
-      const { tempUserChatMessage, tempAssistantChatMessage } =
+      const {tempUserChatMessage, tempAssistantChatMessage} =
         createTempMessages(
           messageContent,
           chatMessages,
@@ -337,32 +347,9 @@ export const useChatHandler = () => {
           )
         }
       }
-
-      if (!currentChat) {
-        currentChat = await handleCreateChat(
-          chatSettings!,
-          profile!,
-          selectedWorkspace!,
-          messageContent,
-          selectedAssistant!,
-          newMessageFiles,
-          setSelectedChat,
-          setChats,
-          setChatFiles
-        )
-      } else {
-        const updatedChat = await updateChat(currentChat.id, {
-          updated_at: new Date().toISOString()
-        })
-
-        setChats(prevChats => {
-          const updatedChats = prevChats.map(prevChat =>
-            prevChat.id === updatedChat.id ? updatedChat : prevChat
-          )
-
-          return updatedChats
-        })
-      }
+      await updateChat(currentChat.id, {
+        updated_at: new Date().toISOString()
+      })
 
       await handleCreateMessages(
         chatMessages,
