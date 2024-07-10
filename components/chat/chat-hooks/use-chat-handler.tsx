@@ -174,8 +174,18 @@ export const useChatHandler = () => {
       //     "openai"
       // })
     }
-
-    return router.push(`/${selectedWorkspace.id}/chat`)
+    const newChat = await handleCreateChat(
+      chatSettings!,
+      profile!,
+      selectedWorkspace!,
+      "新しいチャット",
+      selectedAssistant!,
+      //newMessageFiles,
+      setSelectedChat,
+      setChats,
+      //setChatFiles
+    )
+    return router.push(`/${selectedWorkspace.id}/chat/${newChat.id}`)
   }
 
   const handleFocusChatInput = () => {
@@ -227,17 +237,7 @@ export const useChatHandler = () => {
         messageContent
       )
 
-      let currentChat = selectedChat ? {...selectedChat} : await handleCreateChat(
-        chatSettings!,
-        profile!,
-        selectedWorkspace!,
-        messageContent,
-        selectedAssistant!,
-        //newMessageFiles,
-        setSelectedChat,
-        setChats,
-        //setChatFiles
-      )
+      let currentChat = {...selectedChat!}
 
       const b64Images = newMessageImages.map(image => image.base64)
 

@@ -83,16 +83,6 @@ export const useSelectFileHandler = () => {
           }
         ])
 
-        setChatFiles(prev => [
-          ...prev,
-          {
-            id: file.name,
-            name: file.name,
-            type: simplifiedFileType,
-            file: file
-          }
-        ])
-
         // Handle docx files
         if (
           file.type.includes(
@@ -124,18 +114,6 @@ export const useSelectFileHandler = () => {
           setFiles(prev => [...prev, createdFile])
 
           setNewMessageFiles(prev =>
-            prev.map(item =>
-              item.id === file.name
-                ? {
-                  id: createdFile.id,
-                  name: createdFile.name,
-                  type: createdFile.type,
-                  file: file
-                }
-                : item
-            )
-          )
-          setChatFiles(prev =>
             prev.map(item =>
               item.id === file.name
                 ? {
@@ -214,18 +192,6 @@ export const useSelectFileHandler = () => {
                   : item
               )
             )
-            setChatFiles(prev =>
-              prev.map(item =>
-                item.id === file.name
-                  ? {
-                    id: createdFile.id,
-                    name: createdFile.name,
-                    type: createdFile.type,
-                    file: file
-                  }
-                  : item
-              )
-            )
 
             await createChatFile({
               user_id: profile.user_id,
@@ -241,7 +207,6 @@ export const useSelectFileHandler = () => {
             prev.filter(img => img.messageId !== "temp")
           )
           setNewMessageFiles(prev => prev.filter(file => file.id !== file.name))
-          setChatFiles(prev => prev.filter(file => file.id !== file.name))
         }
       }
     }
