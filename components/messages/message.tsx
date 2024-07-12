@@ -308,7 +308,7 @@ export const Message: FC<MessageProps> = ({
             <MessageMarkdown content={message.content} />
           )}
         </div>
-
+        <div key={fileItems.length}>
         {fileItems.length > 0 && (
           <div className="border-primary mt-6 border-t pt-4 font-bold">
             {!viewSources ? (
@@ -375,6 +375,7 @@ export const Message: FC<MessageProps> = ({
             )}
           </div>
         )}
+        </div>
 
         <div className="mt-3 flex flex-wrap gap-2">
           {message.image_paths.map((path, index) => {

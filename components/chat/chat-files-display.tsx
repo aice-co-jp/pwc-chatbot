@@ -208,16 +208,11 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           )
         )}
         <div
-          className="relative flex items-center space-x-4 rounded-xl border-2 px-4 py-3"
+          className="relative flex cursor-pointer items-center space-x-4 rounded-xl border-2 px-4 py-3 hover:opacity-50"
+          onClick={() => fileInputRef.current?.click()}
         >
-          <div className="rounded bg-blue-500 p-2"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            <IconCirclePlus
-              className="absolute bottom-[12px] left-3 cursor-pointer p-1 hover:opacity-50"
-              size={32}
-            />
-
+          <div className="rounded bg-blue-500 p-2" >
+            <IconCirclePlus />
             {/* Hidden input to select files from device */}
             <Input
               ref={fileInputRef}
@@ -230,7 +225,6 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
               accept={filesToAccept}
             />
           </div>
-
           <div className="truncate text-sm">
             <div className="truncate">新しいファイルを追加する</div>
           </div>
