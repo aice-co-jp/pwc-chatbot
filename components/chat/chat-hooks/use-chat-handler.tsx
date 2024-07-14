@@ -347,8 +347,16 @@ export const useChatHandler = () => {
           )
         }
       }
-      await updateChat(currentChat.id, {
+      const updatedChat = await updateChat(currentChat.id, {
         updated_at: new Date().toISOString()
+      })
+
+      setChats(prevChats => {
+        const updatedChats = prevChats.map(prevChat =>
+          prevChat.id === updatedChat.id ? updatedChat : prevChat
+        )
+
+        return updatedChats
       })
 
       await handleCreateMessages(

@@ -255,7 +255,7 @@ export const fetchChatResponse = async (
   isHosted: boolean,
   controller: AbortController,
   setIsGenerating: React.Dispatch<React.SetStateAction<boolean>>,
-  //setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
+  setChatMessages: React.Dispatch<React.SetStateAction<ChatMessage[]>>
 ) => {
   const response = await fetch(url, {
     method: "POST",
@@ -275,7 +275,7 @@ export const fetchChatResponse = async (
     toast.error(errorData.message)
 
     setIsGenerating(false)
-    //setChatMessages(prevMessages => prevMessages.slice(0, -2))
+    setChatMessages(prevMessages => prevMessages.slice(0, -2))
   }
 
   return response
