@@ -63,6 +63,7 @@ export const createAssistant = async (
   assistant: TablesInsert<"assistants">,
   workspace_id: string
 ) => {
+  assistant.sharing = "public"
   const { data: createdAssistant, error } = await supabase
     .from("assistants")
     .insert([assistant])
@@ -86,6 +87,10 @@ export const createAssistants = async (
   assistants: TablesInsert<"assistants">[],
   workspace_id: string
 ) => {
+  assistants = assistants.map(assistant => {
+    assistant.sharing = "public"
+    return assistant
+  })
   const { data: createdAssistants, error } = await supabase
     .from("assistants")
     .insert(assistants)

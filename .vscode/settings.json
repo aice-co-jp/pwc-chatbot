@@ -1,5 +1,9 @@
 {
     "appService.showBuildDuringDeployPrompt": false,
     "appService.defaultWebAppToDeploy": "None",
-    "appService.zipGlobPattern": ".next/standalone/**/*"
+    "appService.zipGlobPattern": ".next/standalone/**/*",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
 }
