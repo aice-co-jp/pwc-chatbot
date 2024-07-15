@@ -21,6 +21,7 @@ import {
   processResponse,
   validateChatSettings
 } from "../chat-helpers"
+import type { ChatFile } from "@/types"
 
 export const useChatHandler = () => {
   const router = useRouter()
@@ -243,16 +244,32 @@ export const useChatHandler = () => {
 
       let retrievedFileItems: Tables<"file_items">[] = []
 
+      let allFiles: Array<{id: string, name: string, type: string}> = []
+        if (selectedAssistant) {
+        const assistantFiles = (
+          await getAssistantFilesByAssistantId(selectedAssistant.id)
+        ).files
+        allFiles = [...assistantFiles]
+        const assistantCollections = (
+          await getAssistantCollectionsByAssistantId(selectedAssistant.id)
+        ).collections
+        for (const collection of assistantCollections) {
+          const collectionFiles = (
+            await getCollectionFilesByCollectionId(collection.id)
+          ).files
+          allFiles = [...allFiles, ...collectionFiles]
+        }
+      }
       if (
-        (newMessageFiles.length > 0 || chatFiles.length > 0) &&
+        (newMessageFiles.length > 0 || chatFiles.length > 0 || allFiles.length > 0) &&
         useRetrieval
       ) {
         setToolInUse("retrieval")
-
+        
         retrievedFileItems = await handleRetrieval(
           userInput,
           newMessageFiles,
-          chatFiles,
+          [...allFiles.map(element => ({...element, file: null})), ...chatFiles],
           chatSettings!.embeddingsProvider,
           sourceCount
         )

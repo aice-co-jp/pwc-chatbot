@@ -7,6 +7,8 @@ import {TabsContent} from "../ui/tabs"
 //import {WorkspaceSwitcher} from "../utility/workspace-switcher"
 //import {WorkspaceSettings} from "../workspace/workspace-settings"
 import {SidebarContent} from "./sidebar-content"
+import {QuickSettings} from "../chat/quick-settings"
+
 
 interface SidebarProps {
   contentType: ContentType
@@ -24,6 +26,7 @@ export const Sidebar: FC<SidebarProps> = ({contentType, showSidebar}) => {
     //  assistants,
     //  tools,
     //  models
+    selectedAssistant
   } = useContext(ChatbotUIContext)
 
   const chatFolders = folders.filter(folder => folder.type === "chats")
@@ -68,11 +71,12 @@ export const Sidebar: FC<SidebarProps> = ({contentType, showSidebar}) => {
           //  <WorkspaceSettings />
           //</div>
         }
+        <QuickSettings />
 
         {(() => {
           switch (contentType) {
             case "chats":
-              return renderSidebarContent("chats", chats, chatFolders)
+              return renderSidebarContent("chats", chats.filter(chat => (chat.assistant_id == selectedAssistant?.id)), chatFolders)
 
             //case "presets":
             //  return renderSidebarContent("presets", presets, presetFolders)
