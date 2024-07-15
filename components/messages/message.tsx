@@ -1,9 +1,9 @@
-import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
-import { ChatbotUIContext } from "@/context/context"
-import { LLM_LIST } from "@/lib/models/llm/llm-list"
-import { cn } from "@/lib/utils"
-import { Tables } from "@/supabase/types"
-import { LLM, LLMID, MessageImage, ModelProvider } from "@/types"
+import {useChatHandler} from "@/components/chat/chat-hooks/use-chat-handler"
+import {ChatbotUIContext} from "@/context/context"
+import {LLM_LIST} from "@/lib/models/llm/llm-list"
+import {cn} from "@/lib/utils"
+import {Tables} from "@/supabase/types"
+import {LLM, LLMID, MessageImage, ModelProvider} from "@/types"
 import {
   IconBolt,
   IconCaretDownFilled,
@@ -14,15 +14,15 @@ import {
   IconPencil
 } from "@tabler/icons-react"
 import Image from "next/image"
-import { FC, useContext, useEffect, useRef, useState } from "react"
-import { ModelIcon } from "../models/model-icon"
-import { Button } from "../ui/button"
-import { FileIcon } from "../ui/file-icon"
-import { FilePreview } from "../ui/file-preview"
-import { TextareaAutosize } from "../ui/textarea-autosize"
-import { WithTooltip } from "../ui/with-tooltip"
-import { MessageActions } from "./message-actions"
-import { MessageMarkdown } from "./message-markdown"
+import {FC, useContext, useEffect, useRef, useState} from "react"
+import {ModelIcon} from "../models/model-icon"
+import {Button} from "../ui/button"
+import {FileIcon} from "../ui/file-icon"
+import {FilePreview} from "../ui/file-preview"
+import {TextareaAutosize} from "../ui/textarea-autosize"
+import {WithTooltip} from "../ui/with-tooltip"
+import {MessageActions} from "./message-actions"
+import {MessageMarkdown} from "./message-markdown"
 
 const ICON_SIZE = 32
 
@@ -62,7 +62,7 @@ export const Message: FC<MessageProps> = ({
     models
   } = useContext(ChatbotUIContext)
 
-  const { handleSendMessage } = useChatHandler()
+  const {handleSendMessage} = useChatHandler()
 
   const editInputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -257,8 +257,8 @@ export const Message: FC<MessageProps> = ({
                 {message.role === "assistant"
                   ? message.assistant_id
                     ? assistants.find(
-                        assistant => assistant.id === message.assistant_id
-                      )?.name
+                      assistant => assistant.id === message.assistant_id
+                    )?.name
                     : selectedAssistant
                       ? selectedAssistant?.name
                       : MODEL_DATA?.modelName
@@ -267,9 +267,9 @@ export const Message: FC<MessageProps> = ({
             </div>
           )}
           {!firstTokenReceived &&
-          isGenerating &&
-          isLast &&
-          message.role === "assistant" ? (
+            isGenerating &&
+            isLast &&
+            message.role === "assistant" ? (
             <>
               {(() => {
                 switch (toolInUse) {
@@ -308,73 +308,121 @@ export const Message: FC<MessageProps> = ({
             <MessageMarkdown content={message.content} />
           )}
         </div>
-        <div key={fileItems.length}>
-        {fileItems.length > 0 && (
-          <div className="border-primary mt-6 border-t pt-4 font-bold">
-            {!viewSources ? (
-              <div
-                className="flex cursor-pointer items-center text-lg hover:opacity-50"
-                onClick={() => setViewSources(true)}
-              >
-                {fileItems.length}
-                {fileItems.length > 1 ? " Sources " : " Source "}
-                from {Object.keys(fileSummary).length}{" "}
-                {Object.keys(fileSummary).length > 1 ? "Files" : "File"}{" "}
-                <IconCaretRightFilled className="ml-1" />
-              </div>
-            ) : (
-              <>
-                <div
-                  className="flex cursor-pointer items-center text-lg hover:opacity-50"
-                  onClick={() => setViewSources(false)}
-                >
-                  {fileItems.length}
-                  {fileItems.length > 1 ? " Sources " : " Source "}
-                  from {Object.keys(fileSummary).length}{" "}
-                  {Object.keys(fileSummary).length > 1 ? "Files" : "File"}{" "}
-                  <IconCaretDownFilled className="ml-1" />
-                </div>
-
-                <div className="mt-3 space-y-4">
-                  {Object.values(fileSummary).map((file, index) => (
-                    <div key={index}>
-                      <div className="flex items-center space-x-2">
-                        <div>
-                          <FileIcon type={file.type} />
-                        </div>
-
-                        <div className="truncate">{file.name}</div>
-                      </div>
-
-                      {fileItems
+        <div key={Object.values(fileSummary).map((file, index) => {
+          fileItems
+            .filter(fileItem => {
+              const parentFile = files.find(
+                parentFile => parentFile.id === fileItem.file_id
+              )
+              return parentFile?.id === file.id
+            })
+        }).length}>
+          {Object.values(fileSummary).map((file, _) => (
+            fileItems
+              .filter(fileItem => {
+                const parentFile = files.find(
+                  parentFile => parentFile.id === fileItem.file_id
+                )
+                return parentFile?.id === file.id
+              })
+          )).length > 0 && (
+              <div className="border-primary mt-6 border-t pt-4 font-bold">
+                {!viewSources ? (
+                  <div
+                    className="flex cursor-pointer items-center text-lg hover:opacity-50"
+                    onClick={() => setViewSources(true)}
+                  >
+                    {Object.values(fileSummary).flatMap((file, _) => (
+                      fileItems
                         .filter(fileItem => {
                           const parentFile = files.find(
                             parentFile => parentFile.id === fileItem.file_id
                           )
                           return parentFile?.id === file.id
                         })
-                        .map((fileItem, index) => (
-                          <div
-                            key={index}
-                            className="ml-8 mt-1.5 flex cursor-pointer items-center space-x-2 hover:opacity-50"
-                            onClick={() => {
-                              setSelectedFileItem(fileItem)
-                              setShowFileItemPreview(true)
-                            }}
-                          >
-                            <div className="text-sm font-normal">
-                              <span className="mr-1 text-lg font-bold">-</span>{" "}
-                              {fileItem.content.substring(0, 200)}...
-                            </div>
-                          </div>
-                        ))}
+                    )).length}
+                    {Object.values(fileSummary).flatMap((file, _) => (
+                      fileItems
+                        .filter(fileItem => {
+                          const parentFile = files.find(
+                            parentFile => parentFile.id === fileItem.file_id
+                          )
+                          return parentFile?.id === file.id
+                        })
+                    )).length > 1 ? " Sources " : " Source "}
+                    from {Object.keys(fileSummary).length}{" "}
+                    {Object.keys(fileSummary).length > 1 ? "Files" : "File"}{" "}
+                    <IconCaretRightFilled className="ml-1" />
+                  </div>
+                ) : (
+                  <>
+                    <div
+                      className="flex cursor-pointer items-center text-lg hover:opacity-50"
+                      onClick={() => setViewSources(false)}
+                    >
+                      {Object.values(fileSummary).flatMap((file, _) => (
+                        fileItems
+                          .filter(fileItem => {
+                            const parentFile = files.find(
+                              parentFile => parentFile.id === fileItem.file_id
+                            )
+                            return parentFile?.id === file.id
+                          })
+                      )).length}
+                      {Object.values(fileSummary).flatMap((file, _) => (
+                        fileItems
+                          .filter(fileItem => {
+                            const parentFile = files.find(
+                              parentFile => parentFile.id === fileItem.file_id
+                            )
+                            return parentFile?.id === file.id
+                          })
+                      )).length > 1 ? " Sources " : " Source "}
+                      from {Object.keys(fileSummary).length}{" "}
+                      {Object.keys(fileSummary).length > 1 ? "Files" : "File"}{" "}
+                      <IconCaretDownFilled className="ml-1" />
                     </div>
-                  ))}
-                </div>
-              </>
+
+                    <div className="mt-3 space-y-4">
+                      {Object.values(fileSummary).map((file, index) => (
+                        <div key={index}>
+                          <div className="flex items-center space-x-2">
+                            <div>
+                              <FileIcon type={file.type} />
+                            </div>
+
+                            <div className="truncate">{file.name}</div>
+                          </div>
+
+                          {fileItems
+                            .filter(fileItem => {
+                              const parentFile = files.find(
+                                parentFile => parentFile.id === fileItem.file_id
+                              )
+                              return parentFile?.id === file.id
+                            })
+                            .map((fileItem, index) => (
+                              <div
+                                key={index}
+                                className="ml-8 mt-1.5 flex cursor-pointer items-center space-x-2 hover:opacity-50"
+                                onClick={() => {
+                                  setSelectedFileItem(fileItem)
+                                  setShowFileItemPreview(true)
+                                }}
+                              >
+                                <div className="text-sm font-normal">
+                                  <span className="mr-1 text-lg font-bold">-</span>{" "}
+                                  {fileItem.content.substring(0, 200)}...
+                                </div>
+                              </div>
+                            ))}
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             )}
-          </div>
-        )}
         </div>
 
         <div className="mt-3 flex flex-wrap gap-2">
