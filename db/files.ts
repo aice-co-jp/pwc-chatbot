@@ -104,6 +104,7 @@ export const createFile = async (
   } else {
     fileRecord.name = baseName + "." + extension
   }
+  fileRecord.sharing = "public"
   const { data: createdFile, error } = await supabase
     .from("files")
     .insert([fileRecord])
@@ -164,6 +165,7 @@ export const createDocXFile = async (
   workspace_id: string,
   embeddingsProvider: "openai" | "local"
 ) => {
+  fileRecord.sharing = "public"
   const { data: createdFile, error } = await supabase
     .from("files")
     .insert([fileRecord])
