@@ -19,7 +19,7 @@ export const uploadFile = async (
     )
   }
 
-  const filePath = `${payload.user_id}/${payload.file_id}`
+  const filePath = `${payload.user_id}/${payload.file_id}/${payload.file_id}`
 
   const { error } = await supabase.storage
     .from("files")

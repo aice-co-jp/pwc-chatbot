@@ -124,7 +124,7 @@ export const createFile = async (
   const filePath = await uploadFile(file, {
     name: createdFile.name,
     user_id: createdFile.user_id,
-    file_id: createdFile.name
+    file_id: createdFile.id
   })
 
   await updateFile(createdFile.id, {
