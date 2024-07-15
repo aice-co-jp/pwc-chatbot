@@ -12,7 +12,7 @@
     "prepare": "husky install",
     "clean": "npm run lint:fix && npm run format:write",
     "dev": "next dev",
-    "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/",
+    "build": "next build && cp -r .next/static .next/standalone/.next/ && cp -r public .next/standalone/ && cp .env.local .next/standalone",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
