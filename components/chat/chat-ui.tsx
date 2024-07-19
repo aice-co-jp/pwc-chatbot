@@ -19,22 +19,27 @@ import {ChatMessages} from "./chat-messages"
 import {ChatScrollButtons} from "./chat-scroll-buttons"
 //import {ChatSecondaryButtons} from "./chat-secondary-buttons"
 import {ChatFilesDisplay} from "./chat-files-display"
-import {Chat} from "openai/resources/index.mjs"
+//import {Chat} from "openai/resources/index.mjs"
+import {useRouter} from "next/navigation"
 
 interface ChatUIProps {}
 
 export const ChatUI: FC<ChatUIProps> = ({}) => {
   useHotkey("o", () => handleNewChat())
 
+  const router = useRouter()
   const params = useParams()
 
   const {
+    chats,
+    selectedWorkspace,
     setChatMessages,
     selectedChat,
     setSelectedChat,
     setChatSettings,
     setChatImages,
     assistants,
+    selectedAssistant,
     setSelectedAssistant,
     setChatFileItems,
     setChatFiles,
@@ -73,8 +78,12 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
         handleFocusChatInput()
         setLoading(false)
       })
+    } else if (chats.filter(chat => (chat.assistant_id == selectedAssistant?.id)).length !== 0) {
+      return router.push(`/${selectedWorkspace!.id}/chat/${chats.filter(chat => (chat.assistant_id == selectedAssistant?.id))[0].id}`)
     } else {
-      setLoading(false)
+      handleNewChat().then(() => (
+        setLoading(false)
+      ))
     }
   }, [])
 
