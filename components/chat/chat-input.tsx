@@ -268,8 +268,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
                 handleSendMessage(userInput, chatMessages, false)
               }}
-              style={{ width: "33px", height: "33px" }}
-              size={30}
+              size={33}
             />
           )}
         </div>
