@@ -1,30 +1,34 @@
 "use client"
 
-import { Dashboard } from "@/components/ui/dashboard"
-import { ChatbotUIContext } from "@/context/context"
-import { getAssistantWorkspacesByWorkspaceId, getPublicAssistants } from "@/db/assistants"
-import { getChatsByWorkspaceId } from "@/db/chats"
-import { getCollectionWorkspacesByWorkspaceId } from "@/db/collections"
-import { getFileWorkspacesByWorkspaceId } from "@/db/files"
-import { getFoldersByWorkspaceId } from "@/db/folders"
-import { getModelWorkspacesByWorkspaceId } from "@/db/models"
-import { getPresetWorkspacesByWorkspaceId } from "@/db/presets"
-import { getPromptWorkspacesByWorkspaceId } from "@/db/prompts"
-import { getAssistantImageFromStorage } from "@/db/storage/assistant-images"
-import { getToolWorkspacesByWorkspaceId } from "@/db/tools"
-import { getWorkspaceById } from "@/db/workspaces"
-import { convertBlobToBase64 } from "@/lib/blob-to-b64"
-import { supabase } from "@/lib/supabase/browser-client"
-import { LLMID } from "@/types"
-import { useParams, useRouter, useSearchParams } from "next/navigation"
-import { ReactNode, useContext, useEffect, useState } from "react"
+import {Tables} from "@/supabase/types"
+import {Dashboard} from "@/components/ui/dashboard"
+import {ChatbotUIContext} from "@/context/context"
+import {getAssistantWorkspacesByWorkspaceId, getPublicAssistants} from "@/db/assistants"
+import {getAssistantCollectionsByAssistantId} from "@/db/assistant-collections"
+import {getAssistantFilesByAssistantId} from "@/db/assistant-files"
+import {getCollectionFilesByCollectionId} from "@/db/collection-files"
+import {getChatsByWorkspaceId} from "@/db/chats"
+import {getCollectionWorkspacesByWorkspaceId} from "@/db/collections"
+import {getFileWorkspacesByWorkspaceId} from "@/db/files"
+import {getFoldersByWorkspaceId} from "@/db/folders"
+import {getModelWorkspacesByWorkspaceId} from "@/db/models"
+import {getPresetWorkspacesByWorkspaceId} from "@/db/presets"
+import {getPromptWorkspacesByWorkspaceId} from "@/db/prompts"
+import {getAssistantImageFromStorage} from "@/db/storage/assistant-images"
+import {getToolWorkspacesByWorkspaceId} from "@/db/tools"
+import {getWorkspaceById} from "@/db/workspaces"
+import {convertBlobToBase64} from "@/lib/blob-to-b64"
+import {supabase} from "@/lib/supabase/browser-client"
+import {LLMID} from "@/types"
+import {useParams, useRouter, useSearchParams} from "next/navigation"
+import {ReactNode, useContext, useEffect, useState} from "react"
 import Loading from "../loading"
 
 interface WorkspaceLayoutProps {
   children: ReactNode
 }
 
-export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
+export default function WorkspaceLayout({children}: WorkspaceLayoutProps) {
   const router = useRouter()
 
   const params = useParams()
@@ -59,7 +63,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    ;(async () => {
+    ; (async () => {
       const session = (await supabase.auth.getSession()).data.session
 
       if (!session) {
@@ -71,7 +75,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
   }, [])
 
   useEffect(() => {
-    ;(async () => await fetchWorkspaceData(workspaceId))()
+    ; (async () => await fetchWorkspaceData(workspaceId))()
 
     setUserInput("")
     setChatMessages([])
@@ -97,6 +101,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     const publicAssistants = await getPublicAssistants()
     setAssistants([...assistantData.assistants, ...publicAssistants])
 
+    let allFiles: Tables<"files">[] = []
     for (const assistant of [...assistantData.assistants, ...publicAssistants]) {
       let url = ""
 
@@ -129,6 +134,19 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
           }
         ])
       }
+
+      const assistantFiles = (await getAssistantFilesByAssistantId(assistant.id))
+        .files
+      allFiles = [...allFiles, ...assistantFiles]
+      const assistantCollections = (
+        await getAssistantCollectionsByAssistantId(assistant.id)
+      ).collections
+      for (const collection of assistantCollections) {
+        const collectionFiles = (
+          await getCollectionFilesByCollectionId(collection.id)
+        ).files
+        allFiles = [...allFiles, ...collectionFiles]
+      }
     }
 
     const chats = await getChatsByWorkspaceId(workspaceId)
@@ -142,7 +160,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
     setFolders(folders)
 
     const fileData = await getFileWorkspacesByWorkspaceId(workspaceId)
-    setFiles(fileData.files)
+    setFiles([...fileData.files, ...allFiles])
 
     const presetData = await getPresetWorkspacesByWorkspaceId(workspaceId)
     setPresets(presetData.presets)

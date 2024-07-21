@@ -23,6 +23,9 @@ import {TextareaAutosize} from "../ui/textarea-autosize"
 import {WithTooltip} from "../ui/with-tooltip"
 import {MessageActions} from "./message-actions"
 import {MessageMarkdown} from "./message-markdown"
+import {getAssistantCollectionsByAssistantId} from "@/db/assistant-collections"
+import {getAssistantFilesByAssistantId} from "@/db/assistant-files"
+import {getCollectionFilesByCollectionId} from "@/db/collection-files"
 
 const ICON_SIZE = 32
 
@@ -170,7 +173,7 @@ export const Message: FC<MessageProps> = ({
           name: parentFile.name,
           count: 1,
           type: parentFile.type,
-          description: parentFile.description
+          description: parentFile.description ?? ""
         }
       } else {
         acc[parentFile.id].count += 1
