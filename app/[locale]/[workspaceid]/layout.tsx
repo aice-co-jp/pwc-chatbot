@@ -162,7 +162,7 @@ export default function WorkspaceLayout({ children }: WorkspaceLayoutProps) {
         "gpt-4o") as LLMID,
       prompt:
         workspace?.default_prompt ||
-        "あなたはプログラミングとビジネスに詳しいアシスタントです。力の限りでユーザーをサポートしてください。",
+        "あなたは多様な分野に詳しいアシスタントです。力の限りでユーザーをサポートしてください。",
       temperature: workspace?.default_temperature || 1.0,
       contextLength: workspace?.default_context_length || 128000,
       includeProfileContext: workspace?.include_profile_context || false,

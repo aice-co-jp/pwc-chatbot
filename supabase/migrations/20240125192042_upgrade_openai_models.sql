@@ -73,7 +73,7 @@ BEGIN
         '',
         '',
         '',
-        FALSE,
+        TRUE,
         '',
         '',
         '',
@@ -83,7 +83,7 @@ BEGIN
         '',
         '',
         '',
-        FALSE,
+        TRUE, -- TRUE if Azure OpenAI, FALSE if OpenAI
         random_username
     );
 
@@ -94,7 +94,7 @@ BEGIN
         'Home',
         128000,
         'gpt-4o', -- Updated default model
-        'You are a friendly, helpful AI assistant.',
+        'あなたは多様な分野に詳しいアシスタントです。力の限りでユーザーをサポートしてください。',
         1.00,
         'My home workspace.',
         'openai',
