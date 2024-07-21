@@ -255,7 +255,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
             <IconPlayerStopFilled
               className="hover:bg-background animate-pulse rounded bg-transparent p-1"
               onClick={handleStopMessage}
-              size={30}
+              size={33}
             />
           ) : (
             <IconSend
