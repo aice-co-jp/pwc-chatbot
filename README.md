@@ -41,10 +41,11 @@ PWCのチャットボットです。のちのち、社内版にもここの変�
 4. `npx supabase db push`をしてください。
 
 ### Azure OpenAIの準備
+gpt-4oのみ現在使用可能です。なお、gpt-4oモデルのデプロイ名は「gpt-4o」にしてください。
 .env.localのこれらを設定してください：
 - AZURE_OPENAI_API_KEY
 - AZURE_OPENAI_ENDPOINT
-- AZURE_GPT_45_VISION_NAME
+- AZURE_EMBEDDINGS_NAME
 なお、詳しい設定方法はAICE高橋またはQQ飯田に聞いてください。
 
 ### OpenAIの準備
