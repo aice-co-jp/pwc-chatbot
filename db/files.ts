@@ -94,7 +94,7 @@ export const createFile = async (
   let validFilename = fileRecord.name.replace(/[^a-z0-9.]/gi, "_").toLowerCase()
   const extension = file.name.split(".").pop()
   const extensionIndex = validFilename.lastIndexOf(".")
-  const baseName = validFilename.substring(
+  const baseName = file.name.substring(
     0,
     extensionIndex < 0 ? undefined : extensionIndex
   )
@@ -124,7 +124,7 @@ export const createFile = async (
   const filePath = await uploadFile(file, {
     name: createdFile.name,
     user_id: createdFile.user_id,
-    file_id: createdFile.id
+    file_id: createdFile.id + "." + extension
   })
 
   await updateFile(createdFile.id, {
