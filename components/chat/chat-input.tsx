@@ -164,7 +164,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   return (
     <>
       <div className="flex flex-col flex-wrap justify-center gap-2">
-
         {selectedTools &&
           selectedTools.map((tool, index) => (
             <div
@@ -261,7 +260,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
           ) : (
             <IconSend
               className={cn(
-                "bg-primary text-secondary rounded p-1",
+                "bg-primary text-secondary rounded-full p-1",
                 !userInput && "cursor-not-allowed opacity-50"
               )}
               onClick={() => {
@@ -269,6 +268,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
 
                 handleSendMessage(userInput, chatMessages, false)
               }}
+              style={{ width: "33px", height: "33px" }}
               size={30}
             />
           )}
