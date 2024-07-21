@@ -9,6 +9,7 @@ export const processTxt = async (txt: Blob): Promise<FileItemChunk[]> => {
   const textContent = textDecoder.decode(fileBuffer)
 
   const splitter = new RecursiveCharacterTextSplitter({
+    separators: ["。", "."],
     chunkSize: CHUNK_SIZE,
     chunkOverlap: CHUNK_OVERLAP
   })

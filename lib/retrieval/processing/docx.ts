@@ -5,6 +5,7 @@ import { CHUNK_OVERLAP, CHUNK_SIZE } from "."
 
 export const processDocX = async (text: string): Promise<FileItemChunk[]> => {
   const splitter = new RecursiveCharacterTextSplitter({
+    separators: ["。", "."],
     chunkSize: CHUNK_SIZE,
     chunkOverlap: CHUNK_OVERLAP
   })
