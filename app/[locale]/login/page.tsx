@@ -202,15 +202,15 @@ export default async function Login({
           placeholder="••••••••"
         />
 
-        <SubmitButton className="mb-2 rounded-md bg-blue-700 px-4 py-2 text-white">
-          Login
+        <SubmitButton className="mb-2 rounded-md bg-blue-700 px-4 py-2 text-white text-center">
+          ログイン
         </SubmitButton>
 
         <SubmitButton
           formAction={signUp}
-          className="border-foreground/20 mb-2 rounded-md border px-4 py-2"
+          className="border-foreground/20 mb-2 rounded-md border px-4 py-2 text-center"
         >
-          Sign Up
+          メールアドレスで登録
         </SubmitButton>
 
         <div className="text-muted-foreground mt-1 flex justify-center text-sm">
