@@ -1,17 +1,17 @@
 "use client"
 
-import {Sidebar} from "@/components/sidebar/sidebar"
+import { Sidebar } from "@/components/sidebar/sidebar"
 //import {SidebarSwitcher} from "@/components/sidebar/sidebar-switcher"
-import {Button} from "@/components/ui/button"
-import {Tabs} from "@/components/ui/tabs"
+import { Button } from "@/components/ui/button"
+import { Tabs } from "@/components/ui/tabs"
 import useHotkey from "@/lib/hooks/use-hotkey"
-import {cn} from "@/lib/utils"
-import {ContentType} from "@/types"
-import {IconChevronCompactRight} from "@tabler/icons-react"
-import {usePathname, useRouter, useSearchParams} from "next/navigation"
-import {FC, useState} from "react"
-import {useSelectFileHandler} from "../chat/chat-hooks/use-select-file-handler"
-import {CommandK} from "../utility/command-k"
+import { cn } from "@/lib/utils"
+import { ContentType } from "@/types"
+import { IconChevronCompactRight } from "@tabler/icons-react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
+import { FC, useState } from "react"
+import { useSelectFileHandler } from "../chat/chat-hooks/use-select-file-handler"
+import { CommandK } from "../utility/command-k"
 
 export const SIDEBAR_WIDTH = 290
 
@@ -19,7 +19,7 @@ interface DashboardProps {
   children: React.ReactNode
 }
 
-export const Dashboard: FC<DashboardProps> = ({children}) => {
+export const Dashboard: FC<DashboardProps> = ({ children }) => {
   useHotkey("s", () => setShowSidebar(prevState => !prevState))
 
   const pathname = usePathname()
@@ -27,7 +27,7 @@ export const Dashboard: FC<DashboardProps> = ({children}) => {
   const searchParams = useSearchParams()
   const tabValue = searchParams.get("tab") || "chats"
 
-  const {handleSelectDeviceFile} = useSelectFileHandler()
+  const { handleSelectDeviceFile } = useSelectFileHandler()
 
   const [contentType, setContentType] = useState<ContentType>(
     tabValue as ContentType

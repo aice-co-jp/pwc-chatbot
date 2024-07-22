@@ -1,26 +1,26 @@
 import Loading from "@/app/[locale]/loading"
-import {useChatHandler} from "@/components/chat/chat-hooks/use-chat-handler"
-import {ChatbotUIContext} from "@/context/context"
-import {getAssistantToolsByAssistantId} from "@/db/assistant-tools"
-import {getChatFilesByChatId} from "@/db/chat-files"
-import {getChatById} from "@/db/chats"
-import {getMessageFileItemsByMessageId} from "@/db/message-file-items"
-import {getMessagesByChatId} from "@/db/messages"
-import {getMessageImageFromStorage} from "@/db/storage/message-images"
-import {convertBlobToBase64} from "@/lib/blob-to-b64"
+import { useChatHandler } from "@/components/chat/chat-hooks/use-chat-handler"
+import { ChatbotUIContext } from "@/context/context"
+import { getAssistantToolsByAssistantId } from "@/db/assistant-tools"
+import { getChatFilesByChatId } from "@/db/chat-files"
+import { getChatById } from "@/db/chats"
+import { getMessageFileItemsByMessageId } from "@/db/message-file-items"
+import { getMessagesByChatId } from "@/db/messages"
+import { getMessageImageFromStorage } from "@/db/storage/message-images"
+import { convertBlobToBase64 } from "@/lib/blob-to-b64"
 import useHotkey from "@/lib/hooks/use-hotkey"
-import {LLMID, MessageImage} from "@/types"
-import {useParams} from "next/navigation"
-import {FC, useContext, useEffect, useState} from "react"
+import { LLMID, MessageImage } from "@/types"
+import { useParams } from "next/navigation"
+import { FC, useContext, useEffect, useState } from "react"
 //import {ChatHelp} from "./chat-help"
-import {useScroll} from "./chat-hooks/use-scroll"
-import {ChatInput} from "./chat-input"
-import {ChatMessages} from "./chat-messages"
-import {ChatScrollButtons} from "./chat-scroll-buttons"
+import { useScroll } from "./chat-hooks/use-scroll"
+import { ChatInput } from "./chat-input"
+import { ChatMessages } from "./chat-messages"
+import { ChatScrollButtons } from "./chat-scroll-buttons"
 //import {ChatSecondaryButtons} from "./chat-secondary-buttons"
-import {ChatFilesDisplay} from "./chat-files-display"
+import { ChatFilesDisplay } from "./chat-files-display"
 //import {Chat} from "openai/resources/index.mjs"
-import {useRouter} from "next/navigation"
+import { useRouter } from "next/navigation"
 
 interface ChatUIProps {}
 
@@ -48,7 +48,7 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
     setSelectedTools
   } = useContext(ChatbotUIContext)
 
-  const {handleNewChat, handleFocusChatInput} = useChatHandler()
+  const { handleNewChat, handleFocusChatInput } = useChatHandler()
 
   const {
     messagesStartRef,
@@ -78,12 +78,15 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
         handleFocusChatInput()
         setLoading(false)
       })
-    } else if (chats.filter(chat => (chat.assistant_id == selectedAssistant?.id)).length !== 0) {
-      return router.push(`/${selectedWorkspace!.id}/chat/${chats.filter(chat => (chat.assistant_id == selectedAssistant?.id))[0].id}`)
+    } else if (
+      chats.filter(chat => chat.assistant_id == selectedAssistant?.id)
+        .length !== 0
+    ) {
+      return router.push(
+        `/${selectedWorkspace!.id}/chat/${chats.filter(chat => chat.assistant_id == selectedAssistant?.id)[0].id}`
+      )
     } else {
-      handleNewChat().then(() => (
-        setLoading(false)
-      ))
+      handleNewChat().then(() => setLoading(false))
     }
   }, [])
 
@@ -94,30 +97,30 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
       message =>
         message.image_paths
           ? message.image_paths.map(async imagePath => {
-            const url = await getMessageImageFromStorage(imagePath)
+              const url = await getMessageImageFromStorage(imagePath)
 
-            if (url) {
-              const response = await fetch(url)
-              const blob = await response.blob()
-              const base64 = await convertBlobToBase64(blob)
+              if (url) {
+                const response = await fetch(url)
+                const blob = await response.blob()
+                const base64 = await convertBlobToBase64(blob)
+
+                return {
+                  messageId: message.id,
+                  path: imagePath,
+                  base64,
+                  url,
+                  file: null
+                }
+              }
 
               return {
                 messageId: message.id,
                 path: imagePath,
-                base64,
+                base64: "",
                 url,
                 file: null
               }
-            }
-
-            return {
-              messageId: message.id,
-              path: imagePath,
-              base64: "",
-              url,
-              file: null
-            }
-          })
+            })
           : []
     )
 
@@ -213,7 +216,7 @@ export const ChatUI: FC<ChatUIProps> = ({}) => {
         <ChatSecondaryButtons />
       </div>
       */}
-        <div className="bg-secondary flex max-h-[50px] min-h-[50px] w-full items-center justify-center border-b-2 font-bold">
+        <div className="flex max-h-[50px] min-h-[50px] w-full items-center justify-center font-bold">
           <div className="max-w-[200px] truncate sm:max-w-[400px] md:max-w-[500px] lg:max-w-[600px] xl:max-w-[700px]">
             {selectedChat?.name || "Chat"}
           </div>
