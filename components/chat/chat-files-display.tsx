@@ -1,8 +1,8 @@
-import {ChatbotUIContext} from "@/context/context"
-import {getFileFromStorage} from "@/db/storage/files"
+import { ChatbotUIContext } from "@/context/context"
+import { getFileFromStorage } from "@/db/storage/files"
 import useHotkey from "@/lib/hooks/use-hotkey"
-import {cn} from "@/lib/utils"
-import {ChatFile, MessageImage} from "@/types"
+import { cn } from "@/lib/utils"
+import { ChatFile, MessageImage } from "@/types"
 import {
   IconCircleFilled,
   IconFileFilled,
@@ -17,13 +17,13 @@ import {
   IconCirclePlus
 } from "@tabler/icons-react"
 import Image from "next/image"
-import {FC, useContext, useState, useRef} from "react"
+import { FC, useContext, useState, useRef } from "react"
 //import {Button} from "../ui/button"
-import {FilePreview} from "../ui/file-preview"
-import {WithTooltip} from "../ui/with-tooltip"
+import { FilePreview } from "../ui/file-preview"
+import { WithTooltip } from "../ui/with-tooltip"
 //import {ChatRetrievalSettings} from "./chat-retrieval-settings"
-import {useSelectFileHandler} from "./chat-hooks/use-select-file-handler"
-import {Input} from "../ui/input"
+import { useSelectFileHandler } from "./chat-hooks/use-select-file-handler"
+import { Input } from "../ui/input"
 
 interface ChatFilesDisplayProps {}
 
@@ -47,7 +47,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
   } = useContext(ChatbotUIContext)
 
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const {filesToAccept, handleSelectDeviceFile} = useSelectFileHandler()
+  const { filesToAccept, handleSelectDeviceFile } = useSelectFileHandler()
   const [selectedFile, setSelectedFile] = useState<ChatFile | null>(null)
   const [selectedImage, setSelectedImage] = useState<MessageImage | null>(null)
   const [showPreview, setShowPreview] = useState(false)
@@ -102,7 +102,8 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           }}
         />
       )}
-      <div className="relative max-w-md flex-col gap-2 pr-2 pt-2">
+      <div className="relative max-w-md flex-col gap-2 pr-4 pt-4 pl-4 bg-muted">
+        <h2 className="mt-2 mb-8 font-bold text-lg">参照中のファイル</h2>
         {messageImages.map((image, index) => (
           <div
             key={index}
@@ -132,9 +133,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
               onClick={e => {
                 e.stopPropagation()
                 setNewMessageImages(
-                  newMessageImages.filter(
-                    f => f.messageId !== image.messageId
-                  )
+                  newMessageImages.filter(f => f.messageId !== image.messageId)
                 )
                 setChatImages(
                   chatImages.filter(f => f.messageId !== image.messageId)
@@ -148,9 +147,9 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           file.id === file.name ? (
             <div
               key={index}
-              className="relative flex items-center space-x-4 rounded-xl border-2 px-4 py-3"
+              className="relative flex items-center space-x-4 rounded-xl border-2 px-3 py-2 mb-3 max-w-72"
             >
-              <div className="rounded bg-blue-500 p-2">
+              <div className="p-1">
                 <IconLoader2 className="animate-spin" />
               </div>
 
@@ -162,10 +161,10 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           ) : (
             <div
               key={file.id}
-              className="relative flex cursor-pointer items-center space-x-4 rounded-xl border-2 px-4 py-3 hover:opacity-50"
+              className="relative flex cursor-pointer items-center space-x-4 rounded-xl border-2 px-3 py-2 mb-3 hover:opacity-50 max-w-72"
               onClick={() => getLinkAndView(file)}
             >
-              <div className="rounded bg-blue-500 p-2">
+              <div className="p-1">
                 {(() => {
                   let fileExtension = file.type.includes("/")
                     ? file.type.split("/")[1]
@@ -208,10 +207,10 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           )
         )}
         <div
-          className="relative flex cursor-pointer items-center space-x-4 rounded-xl border-2 px-4 py-3 hover:opacity-50"
+          className="bg-primary relative flex cursor-pointer items-center space-x-4 rounded-xl border-2 px-4 py-3 hover:opacity-50 max-w-72"
           onClick={() => fileInputRef.current?.click()}
         >
-          <div className="rounded bg-blue-500 p-2" >
+          <div className="rounded p-1 text-white">
             <IconCirclePlus />
             {/* Hidden input to select files from device */}
             <Input
@@ -225,16 +224,17 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
               accept={filesToAccept}
             />
           </div>
-          <div className="truncate text-sm">
+          <div className="truncate text-sm font-bold text-white">
             <div className="truncate">新しいファイルを追加する</div>
           </div>
         </div>
       </div>
-    </>)
+    </>
+  )
 }
 
 const RetrievalToggle = ({}) => {
-  const {useRetrieval, setUseRetrieval} = useContext(ChatbotUIContext)
+  const { useRetrieval, setUseRetrieval } = useContext(ChatbotUIContext)
 
   return (
     <div className="flex items-center">

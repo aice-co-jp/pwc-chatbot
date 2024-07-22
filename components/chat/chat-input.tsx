@@ -164,7 +164,6 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
   return (
     <>
       <div className="flex flex-col flex-wrap justify-center gap-2">
-
         {selectedTools &&
           selectedTools.map((tool, index) => (
             <div
@@ -209,7 +208,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
         )}
       </div>
 
-      <div className="border-input relative mt-3 flex min-h-[60px] w-full items-center justify-center rounded-xl border-2">
+      <div className="relative mt-3 flex min-h-[60px] w-full items-center justify-center rounded-xl border border-black">
         <div className="absolute bottom-[76px] left-0 max-h-[300px] w-full overflow-auto rounded-xl dark:border-none">
           <ChatCommandInput />
         </div>
@@ -239,7 +238,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
           className="ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md border-none bg-transparent px-14 py-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
           placeholder={t(
             // `Ask anything. Type "@" for assistants, "/" for prompts, "#" for files, and "!" for tools.`
-            `Ask anything. Type @  /  #  !`
+            `質問を入力してください。`
           )}
           onValueChange={handleInputChange}
           value={userInput}
