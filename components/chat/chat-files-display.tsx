@@ -102,7 +102,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           }}
         />
       )}
-      <div className="relative max-w-md flex-col gap-2 pr-2 pt-2">
+      <div className="relative max-w-md flex-col gap-2 bg-[#F2F2F4] pr-2 pt-2">
         {messageImages.map((image, index) => (
           <div
             key={index}
@@ -206,10 +206,10 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           )
         )}
         <div
-          className="relative flex cursor-pointer items-center space-x-4 rounded-xl border-2 px-4 py-3 hover:opacity-50"
+          className="relative flex cursor-pointer items-center space-x-4 rounded-lg border-2 bg-[#222222] px-4 py-3 hover:opacity-50"
           onClick={() => fileInputRef.current?.click()}
         >
-          <div className="rounded bg-blue-500 p-2">
+          <div className="rounded p-2">
             <IconCirclePlus />
             {/* Hidden input to select files from device */}
             <Input
@@ -223,7 +223,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
               accept={filesToAccept}
             />
           </div>
-          <div className="truncate text-base">
+          <div className="truncate text-base text-[#FFFFFF]">
             <div className="truncate">ファイルを追加する</div>
           </div>
         </div>
