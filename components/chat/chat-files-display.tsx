@@ -1,8 +1,8 @@
-import {ChatbotUIContext} from "@/context/context"
-import {getFileFromStorage} from "@/db/storage/files"
+import { ChatbotUIContext } from "@/context/context"
+import { getFileFromStorage } from "@/db/storage/files"
 import useHotkey from "@/lib/hooks/use-hotkey"
-import {cn} from "@/lib/utils"
-import {ChatFile, MessageImage} from "@/types"
+import { cn } from "@/lib/utils"
+import { ChatFile, MessageImage } from "@/types"
 import {
   IconCircleFilled,
   IconFileFilled,
@@ -17,13 +17,13 @@ import {
   IconCirclePlus
 } from "@tabler/icons-react"
 import Image from "next/image"
-import {FC, useContext, useState, useRef} from "react"
+import { FC, useContext, useState, useRef } from "react"
 //import {Button} from "../ui/button"
-import {FilePreview} from "../ui/file-preview"
-import {WithTooltip} from "../ui/with-tooltip"
+import { FilePreview } from "../ui/file-preview"
+import { WithTooltip } from "../ui/with-tooltip"
 //import {ChatRetrievalSettings} from "./chat-retrieval-settings"
-import {useSelectFileHandler} from "./chat-hooks/use-select-file-handler"
-import {Input} from "../ui/input"
+import { useSelectFileHandler } from "./chat-hooks/use-select-file-handler"
+import { Input } from "../ui/input"
 
 interface ChatFilesDisplayProps {}
 
@@ -47,7 +47,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
   } = useContext(ChatbotUIContext)
 
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const {filesToAccept, handleSelectDeviceFile} = useSelectFileHandler()
+  const { filesToAccept, handleSelectDeviceFile } = useSelectFileHandler()
   const [selectedFile, setSelectedFile] = useState<ChatFile | null>(null)
   const [selectedImage, setSelectedImage] = useState<MessageImage | null>(null)
   const [showPreview, setShowPreview] = useState(false)
@@ -132,9 +132,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
               onClick={e => {
                 e.stopPropagation()
                 setNewMessageImages(
-                  newMessageImages.filter(
-                    f => f.messageId !== image.messageId
-                  )
+                  newMessageImages.filter(f => f.messageId !== image.messageId)
                 )
                 setChatImages(
                   chatImages.filter(f => f.messageId !== image.messageId)
@@ -211,7 +209,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           className="relative flex cursor-pointer items-center space-x-4 rounded-xl border-2 px-4 py-3 hover:opacity-50"
           onClick={() => fileInputRef.current?.click()}
         >
-          <div className="rounded bg-blue-500 p-2" >
+          <div className="rounded bg-blue-500 p-2">
             <IconCirclePlus />
             {/* Hidden input to select files from device */}
             <Input
@@ -226,15 +224,16 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
             />
           </div>
           <div className="truncate text-sm">
-            <div className="truncate">新しいファイルを追加する</div>
+            <div className="truncate">ファイルを追加する</div>
           </div>
         </div>
       </div>
-    </>)
+    </>
+  )
 }
 
 const RetrievalToggle = ({}) => {
-  const {useRetrieval, setUseRetrieval} = useContext(ChatbotUIContext)
+  const { useRetrieval, setUseRetrieval } = useContext(ChatbotUIContext)
 
   return (
     <div className="flex items-center">
