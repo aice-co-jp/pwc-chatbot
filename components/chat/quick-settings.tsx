@@ -191,7 +191,10 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
       }}
     >
       <DropdownMenuTrigger asChild className="max-w-[400px]" disabled={loading}>
-        <Button variant="ghost" className="flex space-x-3 text-lg justify-start">
+        <Button
+          variant="ghost"
+          className="flex justify-start space-x-3 text-lg"
+        >
           {selectedPreset && (
             <ModelIcon
               provider={modelDetails?.provider || "custom"}
@@ -225,9 +228,7 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
                   (selectedPreset || selectedAssistant) &&
                   "Modified "}
 
-                {selectedPreset?.name ||
-                  selectedAssistant?.name ||
-                  t("デフォルト")}
+                {selectedPreset?.name || selectedAssistant?.name || t("経理AI")}
               </div>
 
               <IconChevronDown className="ml-1" />
