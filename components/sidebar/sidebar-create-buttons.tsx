@@ -104,11 +104,18 @@ export const SidebarCreateButtons: FC<SidebarCreateButtonsProps> = ({
   /* ここでボタン文字を変更してるのはわかったけど、chatはどこ？ */
   return (
     <div className="flex w-full space-x-2">
-      <Button className="flex h-[36px] grow" onClick={getCreateFunction()}>
-        <IconPlus className="mr-1" size={20} />
-        New{" "}
+      <Button
+        className="flex h-[48px] grow items-center justify-between rounded-md px-4 text-[16px] text-[#222222] shadow-md"
+        style={{
+          backgroundColor: "rgba(217, 217, 217, 0.3)",
+          boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.15)"
+        }}
+        onClick={getCreateFunction()}
+      >
+        新規{" "}
         {contentType.charAt(0).toUpperCase() +
           contentType.slice(1, contentType.length - 1)}
+        <IconPlus className="mr-1" size={20} />
       </Button>
 
       {/*hasData && (
