@@ -1,19 +1,19 @@
-import {ChatbotUIContext} from "@/context/context"
-import {updateAssistant} from "@/db/assistants"
-import {updateChat} from "@/db/chats"
-import {updateCollection} from "@/db/collections"
-import {updateFile} from "@/db/files"
-import {updateModel} from "@/db/models"
-import {updatePreset} from "@/db/presets"
-import {updatePrompt} from "@/db/prompts"
-import {updateTool} from "@/db/tools"
-import {cn} from "@/lib/utils"
-import {Tables} from "@/supabase/types"
-import {ContentType, DataItemType, DataListType} from "@/types"
-import {FC, useContext, useEffect, useRef, useState} from "react"
+import { ChatbotUIContext } from "@/context/context"
+import { updateAssistant } from "@/db/assistants"
+import { updateChat } from "@/db/chats"
+import { updateCollection } from "@/db/collections"
+import { updateFile } from "@/db/files"
+import { updateModel } from "@/db/models"
+import { updatePreset } from "@/db/presets"
+import { updatePrompt } from "@/db/prompts"
+import { updateTool } from "@/db/tools"
+import { cn } from "@/lib/utils"
+import { Tables } from "@/supabase/types"
+import { ContentType, DataItemType, DataListType } from "@/types"
+import { FC, useContext, useEffect, useRef, useState } from "react"
 //import {Separator} from "../ui/separator"
 //import {AssistantItem} from "./items/assistants/assistant-item"
-import {ChatItem} from "./items/chat/chat-item"
+import { ChatItem } from "./items/chat/chat-item"
 //import {CollectionItem} from "./items/collections/collection-item"
 //import {FileItem} from "./items/files/file-item"
 //import {Folder} from "./items/folders/folder-item"
@@ -30,7 +30,7 @@ interface SidebarDataListProps {
 
 export const SidebarDataList: FC<SidebarDataListProps> = ({
   contentType,
-  data,
+  data
   //folders
 }) => {
   const {
@@ -227,15 +227,16 @@ export const SidebarDataList: FC<SidebarDataListProps> = ({
         {data.length === 0 && (
           <div className="flex grow flex-col items-center justify-center">
             <div className=" text-centertext-muted-foreground p-8 text-lg italic">
-              No {contentType}.
+              {contentType} がありません
             </div>
           </div>
         )}
 
         {(dataWithFolders.length > 0 || dataWithoutFolders.length > 0) && (
           <div
-            className={`h-full ${isOverflowing ? "w-[calc(100%-8px)]" : "w-full"
-              } space-y-2 pt-2 ${isOverflowing ? "mr-2" : ""}`}
+            className={`h-full ${
+              isOverflowing ? "w-[calc(100%-8px)]" : "w-full"
+            } space-y-2 pt-2 ${isOverflowing ? "mr-2" : ""}`}
           >
             {/*folders.map(folder => (
               <Folder

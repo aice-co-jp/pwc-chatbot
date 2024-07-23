@@ -202,7 +202,7 @@ export const ChatInput: FC<ChatInputProps> = ({}) => {
             )}
 
             <div className="text-sm font-bold">
-              Talking to {selectedAssistant.name}
+              {selectedAssistant.name}を使用中
             </div>
           </div>
         )}

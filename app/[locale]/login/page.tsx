@@ -183,7 +183,7 @@ export default async function Login({
         <Brand />
 
         <Label className="text-md mt-4" htmlFor="email">
-          Email
+          Emailアドレス
         </Label>
         <Input
           className="mb-3 rounded-md border bg-inherit px-4 py-2"
@@ -193,7 +193,7 @@ export default async function Login({
         />
 
         <Label className="text-md" htmlFor="password">
-          Password
+          パスワード
         </Label>
         <Input
           className="mb-6 rounded-md border bg-inherit px-4 py-2"
@@ -214,12 +214,12 @@ export default async function Login({
         </SubmitButton>
 
         <div className="text-muted-foreground mt-1 flex justify-center text-sm">
-          <span className="mr-1">Forgot your password?</span>
+          <span className="mr-1">パスワードを忘れた場合:</span>
           <button
             formAction={handleResetPassword}
             className="text-primary ml-1 underline hover:opacity-80"
           >
-            Reset
+            パスワードをリセット
           </button>
         </div>
 
