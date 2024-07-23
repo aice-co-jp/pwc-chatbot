@@ -206,7 +206,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
           )
         )}
         <div
-          className="relative flex cursor-pointer items-center space-x-4 rounded-lg border-2 bg-[#222222] px-4 py-3 hover:opacity-50"
+          className="relative flex  h-[49px] w-[264px] cursor-pointer items-center space-x-4 rounded-lg border-2 bg-[#222222] px-4 py-3 hover:opacity-50"
           onClick={() => fileInputRef.current?.click()}
           style={{
             boxShadow: "0px 1px 1px rgba(0, 0, 0, 0.1)"
