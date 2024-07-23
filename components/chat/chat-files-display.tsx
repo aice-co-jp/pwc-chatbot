@@ -223,7 +223,7 @@ export const ChatFilesDisplay: FC<ChatFilesDisplayProps> = ({}) => {
               accept={filesToAccept}
             />
           </div>
-          <div className="truncate text-sm">
+          <div className="truncate text-base">
             <div className="truncate">ファイルを追加する</div>
           </div>
         </div>
