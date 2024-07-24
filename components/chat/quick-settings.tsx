@@ -223,13 +223,9 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
           ) : (
             <div className="flex w-full justify-between">
               <div className="overflow-hidden text-ellipsis">
-                {isModified &&
-                  (selectedPreset || selectedAssistant) &&
-                  "Modified "}
-
                 {selectedPreset?.name ||
                   selectedAssistant?.name ||
-                  t("デフォルト")}
+                  t("デフォルト生成AI(GPT-4o)")}
               </div>
 
               <IconChevronDown className="ml-1" />
@@ -249,7 +245,7 @@ export const QuickSettings: FC<QuickSettingsProps> = ({}) => {
             <Input
               ref={inputRef}
               className="w-full"
-              placeholder="Search..."
+              placeholder="AIを検索"
               value={search}
               onChange={e => setSearch(e.target.value)}
               onKeyDown={e => e.stopPropagation()}
