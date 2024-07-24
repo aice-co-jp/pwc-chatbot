@@ -20,7 +20,6 @@ import {
 } from "../ui/dropdown-menu"
 import { Input } from "../ui/input"
 import { QuickSettingOption } from "./quick-setting-option"
-import { set } from "date-fns"
 
 interface QuickSettingsProps {}
 
